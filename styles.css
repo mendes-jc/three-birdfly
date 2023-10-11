@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFF;
+}
+
+.info {
+    position: absolute;
+    width: fit-content;
+    left: 16px;
+    top: 16px;
+    background: #b1b1b177;
+    padding: 16px;
+}
+
+#speed-label {
+    font-weight: bold;
+}

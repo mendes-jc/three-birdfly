@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sea Porcupine
+* source:	https://sketchfab.com/3d-models/sea-porcupine-efb4cf181b7549819dc7b33c99dbaea0
+* author:	Zainal Abd. Kahar (https://sketchfab.com/zsuperxtreme)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sea Porcupine" (https://sketchfab.com/3d-models/sea-porcupine-efb4cf181b7549819dc7b33c99dbaea0) by Zainal Abd. Kahar (https://sketchfab.com/zsuperxtreme) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
