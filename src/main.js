@@ -33,8 +33,6 @@ scene.add(player);
 const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 10);
 scene.add( light );
 
-// light.position.setY(20);
-
 camera.position.z = 5;
 
 let offset = 0;
@@ -84,25 +82,25 @@ let previousTime = performance.now();
 let currentAcceleration = 0;
 let currentSpeed = 0;
 
-// Enemies
+// Apples
 const appleMap = new THREE.TextureLoader().load('./src/assets/textures/apple.png');
 appleMap.colorSpace = THREE.SRGBColorSpace;
 const appleMaterial = new THREE.SpriteMaterial({ map: appleMap, transparent: true });
 
-const enemyDistance = 5;
-const enemiesOnScreen = Math.ceil(frustumSize * aspect) / enemyDistance + 200
-let lastEnemyPosition = 5;
-let enemies = [];
+const appleDistance = 5;
+const applesOnScreen = Math.ceil(frustumSize * aspect) / appleDistance + 200
+let lastApplePosition = 5;
+let apples = [];
 
-for (let i = 0; i < enemiesOnScreen; i ++) {
+for (let i = 0; i < applesOnScreen; i ++) {
     const apple = new THREE.Sprite(appleMaterial);
-    apple.position.set(lastEnemyPosition + enemyDistance, frustumSize/2 - Math.random() * frustumSize, 0);
+    apple.position.set(lastApplePosition + appleDistance, frustumSize/2 - Math.random() * frustumSize, 0);
     scene.add(apple);
-
-    lastEnemyPosition = apple.position.x;
+    apples.push(apple);
+    lastApplePosition = apple.position.x;
 }
 
-// HTML items
+// Debug items
 const speedIndicator = document.querySelector("#speed-value");
 const deltaTimeIndicator = document.querySelector("#deltatime-value");
 const fpsIndicator = document.querySelector("#fps-value");
@@ -130,6 +128,7 @@ function animate() {
         adjustRotation();
         movePlayer(deltaTime);
         cameraFollow();
+        updateApples(time);
 
         const playerPositionMod = player.position.x % spriteWidth * 4;
         if (playerPositionMod < lastPlayerDelta) {
@@ -184,4 +183,11 @@ function movePlayer(deltaTime) {
 
 function cameraFollow() {
     camera.position.set(player.position.x, camera.position.y, camera.position.z);
+}
+
+function updateApples(time) {
+    const newScale = 1.5 + Math.sin(time/300) / 4; 
+    apples.forEach(apple => {
+        apple.scale.set(newScale, newScale, newScale);
+    })
 }
