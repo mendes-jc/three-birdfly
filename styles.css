@@ -3,27 +3,3 @@ body {
     color: #FFF;
     user-select: none;
 }
-
-.controls {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    margin: 16px;
-    padding: 16px;
-    right: 16px;
-    bottom: 16px;
-}
-
-.controls button:not(:last-child) {
-    margin-bottom: 8px;
-}
-
-.controls button {
-    width: 200px;
-    height: 200px;
-    border: none;
-    background: #a9a9f9;
-    border-radius: 8px;
-    font-size: 42px;
-    user-select: none;
-}
