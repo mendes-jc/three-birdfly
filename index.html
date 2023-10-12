@@ -7,21 +7,13 @@
 			body { margin: 0; }
 		</style>
 		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="./src/engine/DebugUI/DebugUI.css">
 	</head>
 	<body>
 		<script type="module" src="src/main.js"></script>
-		<div class="info">
-			<span id="speed-label">Use W and S keys to move</span>
-			<br/>
-			<br/>
-			<span id="speed-label">Current Speed:</span>
-			<span id="speed-value"></span>
-			<br/>
-			<span id="speed-label">DeltaTime:</span>
-			<span id="deltatime-value"></span>
-			<br/>
-			<span id="speed-label">FPS:</span>
-			<span id="fps-value"></span>
+		<div class="controls">
+			<button id="moveup-button">▲</button>
+			<button id="movedown-button">▼</button>
 		</div>
 	</body>
 </html>

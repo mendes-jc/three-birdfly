@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+import DebugUI from './engine/DebugUI/DebugUI';
+import InputHandler from './engine/Input/InputHandler';
+
 const scene = new THREE.Scene();
 
 const frustumSize = 15;
@@ -18,7 +21,7 @@ player.add(playerBirdContainer);
 
 const loader = new GLTFLoader();
 
-loader.load('../src/assets/models/low_poly_bird/scene.gltf', gltf => {
+loader.load('/assets/models/low_poly_bird/scene.gltf', gltf => {
     const newScene = gltf.scene;
     newScene.scale.x = 7;
     newScene.scale.y = 7;
@@ -38,14 +41,14 @@ camera.position.z = 5;
 let offset = 0;
 
 // BACKGROUND
-const textureMap = new THREE.TextureLoader().load('./src/assets/textures/forest2.png');
+const textureMap = new THREE.TextureLoader().load('/assets/textures/forest5.png');
 textureMap.colorSpace = THREE.SRGBColorSpace;
 const planeMaterial = new THREE.SpriteMaterial({ map: textureMap });
 
 const spriteHeight = frustumSize;
-const spriteWidth = spriteHeight/2;
+const spriteWidth = spriteHeight * 16/9;
 
-const spriteCount = Math.ceil((frustumSize * aspect)/spriteWidth) + 2;
+const spriteCount = Math.ceil((frustumSize * aspect)/spriteWidth) + 4;
 
 let sprites = [];
 let lastSpritePosition = 0;
@@ -83,7 +86,7 @@ let currentAcceleration = 0;
 let currentSpeed = 0;
 
 // Apples
-const appleMap = new THREE.TextureLoader().load('./src/assets/textures/apple.png');
+const appleMap = new THREE.TextureLoader().load('/assets/textures/apple.png');
 appleMap.colorSpace = THREE.SRGBColorSpace;
 const appleMaterial = new THREE.SpriteMaterial({ map: appleMap, transparent: true });
 
@@ -92,18 +95,9 @@ const applesOnScreen = Math.ceil(frustumSize * aspect) / appleDistance + 200
 let lastApplePosition = 5;
 let apples = [];
 
-for (let i = 0; i < applesOnScreen; i ++) {
-    const apple = new THREE.Sprite(appleMaterial);
-    apple.position.set(lastApplePosition + appleDistance, frustumSize/2 - Math.random() * frustumSize, 0);
-    scene.add(apple);
-    apples.push(apple);
-    lastApplePosition = apple.position.x;
-}
-
-// Debug items
-const speedIndicator = document.querySelector("#speed-value");
-const deltaTimeIndicator = document.querySelector("#deltatime-value");
-const fpsIndicator = document.querySelector("#fps-value");
+DebugUI.addLabel("speed", "Vertical Speed");
+DebugUI.addLabel("fps", "FPS Value");
+DebugUI.addLabel("deltaTime", "Delta Time");
 
 let lastPlayerDelta = 0;
 
@@ -120,9 +114,10 @@ function animate() {
             speedDown(deltaTime);
         }
 
-        speedIndicator.textContent = currentSpeed;
-        deltaTimeIndicator.textContent = deltaTime;
-        fpsIndicator.textContent = 1000/deltaTime;
+
+        DebugUI.updateValue("speed", currentSpeed);
+        DebugUI.updateValue("fps", 1000/deltaTime);
+        DebugUI.updateValue("deltaTime", deltaTime);
 
         player.translateY(currentSpeed * deltaTime);
         adjustRotation();
@@ -130,7 +125,7 @@ function animate() {
         cameraFollow();
         updateApples(time);
 
-        const playerPositionMod = player.position.x % spriteWidth * 4;
+        const playerPositionMod = player.position.x % spriteWidth * 2;
         if (playerPositionMod < lastPlayerDelta) {
             console.log("UPDATING BACKGROUND: ", player.position.x);
             updateSprites();
@@ -143,22 +138,28 @@ function animate() {
 }
 animate();
 
-document.addEventListener('keydown', event => {
-    if (event.key === "w") {
-        currentAcceleration = acceleration;
-    }
-    if (event.key === "s") {
-        currentAcceleration = (acceleration * -1);
-    }
+InputHandler.onKeyDown("w", () => currentAcceleration = acceleration);
+InputHandler.onKeyDown("s", () => currentAcceleration = -acceleration);
+
+InputHandler.onKeyUp("w", () => currentAcceleration = 0);
+InputHandler.onKeyUp("s", () => currentAcceleration = 0);
+
+// buttons
+const moveUp = document.querySelector("#moveup-button");
+const moveDown = document.querySelector("#movedown-button");
+
+moveUp.addEventListener("touchstart", event => {
+    currentAcceleration = acceleration;
+})
+moveUp.addEventListener("touchend", event => {
+    currentAcceleration = 0;
 })
 
-document.addEventListener('keyup', event => {
-    if (event.key === "w") {
-        currentAcceleration = 0;
-    }
-    if (event.key === "s") {
-        currentAcceleration = 0;
-    }
+moveDown.addEventListener("touchstart", event => {
+    currentAcceleration = -acceleration;
+})
+moveDown.addEventListener("touchend", event => {
+    currentAcceleration = 0;
 })
 
 function speedUp(deltaTime) {

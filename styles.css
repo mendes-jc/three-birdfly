@@ -1,17 +1,29 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: #FFF;
+    user-select: none;
 }
 
-.info {
+.controls {
     position: absolute;
-    width: fit-content;
-    left: 16px;
-    top: 16px;
-    background: #b1b1b177;
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
     padding: 16px;
+    right: 16px;
+    bottom: 16px;
 }
 
-#speed-label {
-    font-weight: bold;
+.controls button:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+.controls button {
+    width: 200px;
+    height: 200px;
+    border: none;
+    background: #a9a9f9;
+    border-radius: 8px;
+    font-size: 42px;
+    user-select: none;
 }

@@ -1,0 +1,12 @@
+.debugger-container {
+    position: absolute;
+    width: fit-content;
+    left: 16px;
+    top: 16px;
+    background: #b1b1b177;
+    padding: 16px;
+}
+
+.debugger-container .debugger-label {
+    font-weight: bold;
+}
