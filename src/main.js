@@ -96,8 +96,7 @@ let lastApplePosition = 5;
 let apples = [];
 
 DebugUI.addLabel("speed", "Vertical Speed");
-DebugUI.addLabel("fps", "FPS Value");
-DebugUI.addLabel("deltaTime", "Delta Time");
+DebugUI.addLabel("fps", "FPS");
 
 let lastPlayerDelta = 0;
 
@@ -116,8 +115,7 @@ function animate() {
 
 
         DebugUI.updateValue("speed", currentSpeed);
-        DebugUI.updateValue("fps", 1000/deltaTime);
-        DebugUI.updateValue("deltaTime", deltaTime);
+        DebugUI.updateValue("fps", Math.ceil(1000/deltaTime));
 
         player.translateY(currentSpeed * deltaTime);
         adjustRotation();

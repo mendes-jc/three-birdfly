@@ -3,3 +3,15 @@ body {
     color: #FFF;
     user-select: none;
 }
+
+.controls {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 16px;
+    background: #b1b1b188;
+}
+
+.controls span {
+    font-size: 20px;
+}
